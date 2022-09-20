@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=Sawarabi+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: "Oswald", "Sawarabi Gothic", sans-serif;
+        background-color: rgb(244, 148, 70);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .title {
+        font-size: 2rem;
+      }
+      #number {
+        height: 200px;
+        font-size: 10rem;
+        font-weight: 700;
+      }
+      .btn {
+        cursor: pointer;
+        border: 1px solid rgb(0, 0, 0);
+        color: #ffffff;
+        padding: 1rem 3rem;
+        background-color: rgb(255, 135, 37);
+        font-size: 1.5rem;
+        font-weight: 400;
+        font-family: "Oswald", sans-serif;
+      }
+      .btn:hover {
+        background-color: #ffdd00;
+        border: 1px solid #ffdd00;
+      }
+      .btn + .btn {
+        margin-left: 2rem;
+      }
+      #stkr{
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 25px;
+      height: 25px;
+      background: rgba(25, 50, 213, 0.5);
+      border-radius: 50%;
+      transition: 0.2s;
+      transition-timing-function: ease-out;
+      pointer-events: none;
+      z-index: 10;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="stkr"></div>
+    <div class="container">
+      <h1 class="title">ランダム数値生成</h1>
+      <h2 id="number"></h2>
+      <button id="start" class="btn">START</button>
+      <button id="stop" class="btn">STOP</button>
+     
+    </div>
+
+    <script>
+  
+      let timerId;
+      let number;
+
+      //ランダムに生成する数値の上限(0~num-1まで)
+      //31までの数値
+      let num = 32;
+      let spped = 100;
+      function changeNum() {
+        //既にtimerIdをがあるかチェック
+        if (!timerId) {
+          timerId = setInterval(flashNum, spped, num);
+        }
+      }
+      function flashNum(num) {
+        //ランダムに数値生成(31までの数)
+        number = Math.floor(Math.random() * num);
+        document.querySelector("#number").textContent = number;
+      }
+
+      function stopNum() {
+        clearInterval(timerId);
+        timerId = null;
+      }
+      document.getElementById("start").addEventListener("click", changeNum);
+      document.getElementById("stop").addEventListener("click", stopNum);
+    </script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script type="text/javascript">
+       
+        const mouseStalker = "#stkr";        
+        const mouseTarget = ".btn";    
+        const mouseStalkerArea = window;        
+        
+        const stkrSize = parseInt($(mouseStalker).css("width").replace(/px/, ""));
+        const stkrPosX = parseInt($(mouseStalker).css("left").replace(/px/, ""));
+        const stkrPosY = parseInt($(mouseStalker).css("top").replace(/px/, ""));
+        const cssPosAjust = stkrPosX + (stkrSize / 2);
+        let scale = 1;
+    
+        
+        $(mouseStalkerArea).hover(function(){
+          $(mouseStalkerArea).mousemove(function(e){
+            let x = e.clientX - cssPosAjust;
+            let y = e.clientY - cssPosAjust;
+            $(mouseStalker).css({
+              "transform": "translate(" + x + "px," + y + "px) scale(" + scale + ")",
+            });
+          });
+        });
+    
+       
+        $(mouseTarget).hover(function(e){
+          scale = 2;
+          let x = e.clientX - cssPosAjust;
+          let y = e.clientY - cssPosAjust;
+          $(mouseStalker).css({
+            "transform": "translate(" + x + "px," + y + "px) scale(" + scale + ")",
+             "background": "rgb(255, 0, 119, 0.5)"
+          });
+        }, function(){
+          scale = 1;
+        
+          $(mouseStalker).css({
+             "background": "rgba(25, 50, 213, 0.5)"
+          });
+        });
+    
+      </script>
+  </body>
+</html>
