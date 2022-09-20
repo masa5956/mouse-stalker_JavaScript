@@ -66,8 +66,8 @@
     <div class="container">
       <h1 class="title">ランダム数値生成</h1>
       <h2 id="number"></h2>
-      <button id="start" class="btn">START</button>
-      <button id="stop" class="btn">STOP</button>
+      <button id="start" class="btn">スタート</button>
+      <button id="stop" class="btn">ストップ</button>
      
     </div>
 
@@ -76,18 +76,17 @@
       let timerId;
       let number;
 
-      //ランダムに生成する数値の上限(0~num-1まで)
-      //31までの数値
+    
       let num = 32;
       let spped = 100;
       function changeNum() {
-        //既にtimerIdをがあるかチェック
+       
         if (!timerId) {
           timerId = setInterval(flashNum, spped, num);
         }
       }
       function flashNum(num) {
-        //ランダムに数値生成(31までの数)
+     
         number = Math.floor(Math.random() * num);
         document.querySelector("#number").textContent = number;
       }
